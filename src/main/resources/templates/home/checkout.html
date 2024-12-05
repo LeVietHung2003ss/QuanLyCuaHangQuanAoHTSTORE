@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTSTORE</title>
+    <link href='./fe/img/favicon.png' rel='icon' type='image/x-icon' />
+    <link rel="stylesheet" th:href="@{/fe/css/main.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/home-responsive.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/style.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/cart.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/toast-message.css}">
+    <link rel="stylesheet" th:href="@{/fe/font/font-awesome-pro-v6-6.2.0/css/all.min.css}"/>
+
+</head>
+<body>
+<header >
+    <div class="header-middle">
+        <div class="container">
+            <div class="header-middle-left">
+                <div class="header-logo">
+                    <a th:href="@{/home/trangchu}">
+                        <img th:src="@{/fe/img/logoShop.jpg}" alt="" class="header-logo-img " style="width:60px; height:60px;">
+                    </a>
+                </div>
+            </div>
+            <div class="header-middle-center">
+                <form action="" class="form-search">
+                    <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+                    <input type="text" class="form-search-input" placeholder="Tìm kiếm sản phẩm...">
+                </form>
+            </div>
+            <div class="header-middle-right">
+                <ul class="header-middle-right-list">
+                    <li class="header-middle-right-item dropdown open">
+                        <i class="fa-light fa-user"></i>
+                        <div class="auth-container" th:object="${userdto}">
+                            <!--                            <span class="text-dndk">Đăng nhập / Đăng ký</span>-->
+                            <span class="text-tk" th:text="*{fullName}">Tài khoản <i class="fa-sharp fa-solid fa-caret-down"></i></span>
+                        </div>
+                        <ul class="header-middle-right-menu">
+                            <li><a th:href="@{/home/trangchu/donhang}"  ><i class="fa-light fa-right-to-bracket"></i> Đơn hàng</a></li>
+                            <li><a th:href="@{/home}"  ><i class="fa-light fa-user-plus"></i> Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    <li class="header-middle-right-item open" >
+                        <div class="cart-icon-menu">
+                            <a th:href="@{/home/trangchu/giohang}"><i class="fa-light fa-basket-shopping"></i></a>
+                            <!--                            <span class="count-product-cart" ></span>-->
+                        </div>
+                        <span>Giỏ hàng</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="row" >
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            <h5>Thông tin khách hàng</h5>
+            <hr>
+            <form id="form" method="post" th:action="@{/home/trangchu/checkout}" th:object="${donhang}" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" id="taiKhoanId" th:field="*{taiKhoanId}" th:value="${userdto.taiKhoanId}">
+
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="name" placeholder="Họ tên" th:field="*{khachHang.hoTen}">
+                </div>
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="address" placeholder="Địa chỉ" th:field="*{khachHang.diaChi}">
+                </div>
+                <div class="form-field">
+                    <input class="form-control" type="email" name="email" placeholder="Email" th:field="*{khachHang.email}">
+                </div>
+                <div class="form-field">
+                    <input class="form-control" type="text" name="phone" placeholder="SĐT" th:field="*{khachHang.SDT}">
+                </div>
+                <div class="form-field">
+                    <label for="date">Ngày đặt hàng</label>
+                    <input class="form-control" type="date" name="date" id="date" placeholder="" th:field="*{ngayDatHang}">
+                </div>
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Thanh toán">
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="box-element">
+            <h3>Danh sách sản phẩm</h3>
+            <hr>
+            <div class="cart-row" th:each="item : ${gioHang}">
+                <div style="flex:2"><img class="row-image" th:src="@{'/assets/img/products/'+${item.sanPham.hinhAnh}}"></div>
+                <div style="flex:2"><p th:text="${item.sanPham.tenSanPham}" ></p></div>
+                <div style="flex:1"><p th:text="${item.sanPham.giaSanPham}+'đ'"></p></div>
+                <div style="flex:1"><p th:text="'x'+${item.soLuong}"></p></div>
+            </div>
+            <h5>Tổng tiền : <span th:text="${tongTien}+'đ'"></span> </h5>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

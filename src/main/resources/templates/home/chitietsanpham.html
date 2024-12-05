@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTSTORE</title>
+    <link href='./fe/img/favicon.png' rel='icon' type='image/x-icon' />
+    <link rel="stylesheet" th:href="@{/fe/css/main.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/home-responsive.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/toast-message.css}">
+    <link rel="stylesheet" th:href="@{/fe/font/font-awesome-pro-v6-6.2.0/css/all.min.css}"/>
+
+</head>
+<body>
+<header>
+    <div class="header-middle">
+        <div class="container">
+            <div class="header-middle-left">
+                <div class="header-logo">
+                    <a th:href="@{/home/trangchu}">
+                        <img th:src="@{/fe/img/logoShop.jpg}" alt="" class="header-logo-img " style="width:60px; height:60px;">
+                    </a>
+                </div>
+            </div>
+            <div class="header-middle-center">
+                <form action="" class="form-search">
+                    <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+                    <input type="text" class="form-search-input" placeholder="Tìm kiếm sản phẩm...">
+                </form>
+            </div>
+            <div class="header-middle-right">
+                <ul class="header-middle-right-list">
+                    <li class="header-middle-right-item dropdown open">
+                        <i class="fa-light fa-user"></i>
+                        <div class="auth-container" th:object="${userdto}">
+                            <span class="text-tk" th:text="*{fullName}">Tài khoản <i class="fa-sharp fa-solid fa-caret-down"></i></span>
+                        </div>
+                        <ul class="header-middle-right-menu">
+                            <li><a th:href="@{/home/trangchu/donhang}"  ><i class="fa-light fa-right-to-bracket"></i> Đơn hàng</a></li>
+                            <li><a th:href="@{/home}"  ><i class="fa-light fa-user-plus"></i> Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    <li class="header-middle-right-item open" >
+                        <div class="cart-icon-menu">
+                            <a th:href="@{/home/trangchu/giohang}"><i class="fa-light fa-basket-shopping"></i></a>
+                            <!--                            <span class="count-product-cart" ></span>-->
+                        </div>
+                        <span>Giỏ hàng</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class="header-bottom">
+    <div class="container">
+        <ul class="menu-list">
+            <li class="menu-list-item"><a href="" class="menu-link" th:href="@{/home/trangchu}">Trang chủ</a></li>
+            <li class="menu-list-item" ><a class="menu-link" th:href="@{/home/trangchu/quan}">QUẦN</a></li>
+            <li class="menu-list-item" ><a class="menu-link"  th:href="@{/home/trangchu/ao}">ÁO</a></li>
+        </ul>
+    </div>
+</nav>
+<section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center" >
+                <input type="hidden" class="form-control" id="productId" th:field="*{ctsp.sanPhamId}">
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{'/assets/img/products/'+${ctsp.hinhAnh}}" alt="..." /></div>
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder" th:text="${ctsp.tenSanPham}"></h1>
+                    <div class="fs-5 mb-5">
+                        <span th:text="${ctsp.giaSanPham}+' VND'"></span>
+                    </div>
+                    <p class="lead"  th:text="${ctsp.moTaSanPham}"></p>
+                    <form th:action="@{/home/themgiohang}"  method="post">
+                        <input type="hidden" th:value="${ctsp.sanPhamId}" name="sanPhamId">
+                        <div class="d-block">
+                            <label class="text-muted">Số lượng</label>
+                            <input class="form-control text-center me-3"  type="number" value="1" style="max-width: 3rem" name="soLuong"/>
+                        </div>
+                        <div class="d-flex p-2">
+                                <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                    <i class="bi-cart-fill me-1"></i>
+                                    Thêm vào giỏ hàng
+                                </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</section>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-top-content">
+                <div class="footer-top-img">
+                    <img src="./fe/img/vy-food.png" alt="">
+                </div>
+                <div class="footer-top-subbox">
+                    <div class="footer-top-subs">
+                        <h2 class="footer-top-subs-title">Đăng ký nhận tin</h2>
+                        <p class="footer-top-subs-text">Nhận thông tin mới nhất từ chúng tôi</p>
+                    </div>
+                    <form class="form-ground">
+                        <input type="email" class="form-ground-input" placeholder="Nhập email của bạn">
+                        <button class="form-ground-btn">
+                            <span>ĐĂNG KÝ</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="widget-area">
+        <div class="container">
+            <div class="widget-row">
+                <div class="widget-row-col-1">
+                    <h3 class="widget-title">Về chúng tôi</h3>
+                    <div class="widget-row-col-content">
+                        <p>HTSTORE là thương hiệu được thành lập vào năm 2024 với tiêu chí đặt chất lượng sản phẩm lên hàng đầu.</p>
+                    </div>
+                    <div class="widget-social">
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-row-col">
+                    <h3 class="widget-title">Liên kết</h3>
+                    <ul class="widget-contact">
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Về chúng tôi</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Sản phẩm</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Điều khoản</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Liên hệ</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Tin tức</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-row-col">
+                    <h3 class="widget-title">Sản phẩm</h3>
+                    <ul class="widget-contact">
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Quần</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Áo</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Giày</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Phụ kiện</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-row-col-1">
+                    <h3 class="widget-title">Liên hệ</h3>
+                    <div class="contact">
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fa-regular fa-location-dot"></i>
+                            </div>
+                            <div class="contact-content">
+                                <span>Ngõ 75, đường Vân Canh, An Trai Hoài Đức Hà Nội</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fa-regular fa-phone"></i>
+                            </div>
+                            <div class="contact-content contact-item-phone">
+                                <span>0123 456 789</span>
+                                <br>
+                                <span>0969 485 421</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <div class="contact-content conatct-item-email">
+                                <span>lvh@gmail.com</span><br />
+                                <span>pvt@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

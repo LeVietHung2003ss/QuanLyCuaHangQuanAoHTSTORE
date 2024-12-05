@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOGIN</title>
+  <link rel="stylesheet" th:href="@{/fe/css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{/fe/css/index.css}">
+</head>
+<body>
+<div id="login">
+  <div class="container">
+    <div id="login-row" class="row justify-content-center align-items-center">
+      <div id="login-column" class="col-md-6">
+        <div id="login-box" class="col-md-12">
+          <form id="login-form" class="form" th:action="@{/home/registration}" method="post" th:object="${userdto}">
+            <h3 class="text-center text-info">Sign up</h3>
+            <div class="form-group">
+              <label for="fullname" class="text-info">Fullname:</label><br>
+              <input type="text" name="fullname" id="fullname" class="form-control" th:field="*{fullName}">
+            </div>
+            <div th:if="${param.fullname}">
+              <div class="alert alert-info"> Your fullname is not correct</div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="text-info">Username:</label><br>
+              <input type="text" name="username" id="username" class="form-control" th:field="*{userName}">
+            </div>
+            <div th:if="${param.emailwrong}">
+              <div class="alert alert-info"> Your username is not correct</div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="text-info">Password:</label><br>
+              <input type="password" name="password" id="password" class="form-control" th:field="*{passWord}">
+            </div>
+            <div th:if="${param.passwordwrong}">
+              <div class="alert alert-info"> Your password is not correct</div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="text-info">Gender:</label><br>
+              <select name="gender" id="gender" class="form-control" th:field="*{gender}">
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="username" class="text-info">Address:</label><br>
+              <input type="text" name="address" id="address" class="form-control" th:field="*{address}">
+            </div>
+            <div th:if="${param.address}">
+              <div class="alert alert-info"> Your address is not correct</div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="text-info">Email:</label><br>
+              <input type="text" name="email" id="email" class="form-control" th:field="*{email}">
+            </div>
+            <div th:if="${param.email}">
+              <div class="alert alert-info"> Your email is not correct</div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="text-info">Telephone:</label><br>
+              <input type="text" name="telephone" id="telephone" class="form-control" th:field="*{telephone}">
+            </div>
+            <div th:if="${param.telephone}">
+              <div class="alert alert-info"> Your telephone is not correct</div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-success">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.getElementById('login-form').addEventListener('submit', function() {
+    document.querySelector('button[type="submit"]').disabled = true;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}">
+    <title>Quản lý cửa hàng</title>
+</head>
+
+<body>
+<div class="container mt-5 ">
+    <h1 class="mb-4">Thêm sản phẩm mới</h1>
+    <form role="form" method="post" th:action="@{/admin/sanpham/themsp}" th:object="${themSP}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="productName">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="productName" th:field="*{tenSanPham}">
+        </div>
+        <div class="form-group">
+            <label>Loại sản phẩm</label>
+            <select class="form-control select2 select2-hidden-accessible" style="width:100%;" th:field="*{loaiSanPhamId}" >
+                <option th:each="danhMuc : ${DsDanhMuc}" th:value="${danhMuc.loaiSanPhamId}" th:text="${danhMuc.tenLoai}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Nhà cung cấp</label>
+            <select class="form-control select2 select2-hidden-accessible" style="width:100%;" th:field="*{nhaCungCapId}" >
+                <option th:each="nhaCungCap : ${DsNhaCungCap}" th:value="${nhaCungCap.nhaCungCapId}" th:text="${nhaCungCap.tenNhaCungCap}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="productGia">Giá</label>
+            <input type="text" class="form-control" id="productGia" th:field="*{giaSanPham}">
+        </div>
+        <div class="form-group">
+            <label for="productMota">Mô tả</label>
+<!--            <input type="text" class="form-control" id="productMota" th:field="*{moTaSanPham}">-->
+            <textarea class="form-control" id="productMota" rows="4"  th:field="*{moTaSanPham}" ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="productImage">Hình ảnh</label>
+            <input type="file" class="form-control" id="productImage" name="fileImage">
+        </div>
+        <div class="form-group">
+            <label for="productTong">Tổng số lượng trong kho</label>
+            <input type="text" class="form-control" id="productTong" th:field="*{tongSoLuongTrongKho}">
+        </div>
+        <button type="submit" class="btn btn-primary" >Thêm</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}">
+    <title>Quản lý cửa hàng</title>
+</head>
+
+<body>
+<div class="container mt-5 ">
+    <h1 class="mb-4">Sửa đơn hàng</h1>
+    <form role="form" method="post" th:action="@{/admin/donhang/suadh}" th:object="${suaDH}" enctype="multipart/form-data">
+        <input type="hidden" class="form-control" id="productId" th:field="*{donDatHangId}">
+        <div class="form-group">
+            <label for="inlineRadio1">Trạng thái</label>
+            <div>
+                <div class="form-check form-check-inline" >
+                    <input type="radio" class="form-check-input" id="inlineRadio1" th:field="*{trangThai}" th:value="false">
+                    <label class="form-check-label" for="inlineRadio1" >Chưa sử lý </label>
+                </div>
+                <div class="form-check form-check-inline" >
+                    <input type="radio" class="form-check-input" id="inlineRadio2" th:field="*{trangThai}" th:value="true">
+                    <label class="form-check-label" for="inlineRadio2" >Đã sử lý</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" >Sửa</button>
+    </form>
+</div>
+
+</body>
+</html>

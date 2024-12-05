@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}">
+    <title>Quản lý cửa hàng</title>
+</head>
+
+<body>
+<div class="container mt-5 ">
+    <h1 class="mb-4">Sửa khách hàng</h1>
+    <form role="form" method="post" th:action="@{/admin/khachhang/suakhachhang}" th:object="${suaKhachHang}" enctype="multipart/form-data">
+        <input type="hidden" class="form-control" id="productId" th:field="*{khachHangId}">
+        <div class="form-group">
+            <label for="productName">Tên khách hàng</label>
+            <input type="text" class="form-control" id="productName" th:field="*{hoTen}">
+        </div>
+        <div class="form-group">
+            <label for="productGia">Địa chỉ</label>
+            <input type="text" class="form-control" id="productDiaChi" th:field="*{diaChi}">
+        </div>
+        <div class="form-group">
+            <label for="productGia">SĐT</label>
+            <input type="text" class="form-control" id="productGia" th:field="*{SDT}">
+        </div>
+        <div class="form-group">
+            <label for="productMota">Email</label>
+            <input type="text" class="form-control" id="productMota" th:field="*{email}">
+        </div>
+        <button type="submit" class="btn btn-primary" >Sửa</button>
+    </form>
+</div>
+
+</body>
+</html>

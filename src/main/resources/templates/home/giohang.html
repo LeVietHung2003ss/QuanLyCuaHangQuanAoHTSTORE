@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTSTORE</title>
+    <link href='./fe/img/favicon.png' rel='icon' type='image/x-icon' />
+    <link rel="stylesheet" th:href="@{/fe/css/main.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/home-responsive.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/cart.css}">
+    <link rel="stylesheet" th:href="@{/fe/css/toast-message.css}">
+    <link rel="stylesheet" th:href="@{/fe/font/font-awesome-pro-v6-6.2.0/css/all.min.css}"/>
+
+</head>
+<body>
+<header >
+    <div class="header-middle">
+        <div class="container">
+            <div class="header-middle-left">
+                <div class="header-logo">
+                    <a th:href="@{/home/trangchu}">
+                        <img th:src="@{/fe/img/logoShop.jpg}" alt="" class="header-logo-img " style="width:60px; height:60px;">
+                    </a>
+                </div>
+            </div>
+            <div class="header-middle-center">
+                <form action="" class="form-search">
+                    <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+                    <input type="text" class="form-search-input" placeholder="Tìm kiếm sản phẩm...">
+                </form>
+            </div>
+            <div class="header-middle-right">
+                <ul class="header-middle-right-list">
+                    <li class="header-middle-right-item dropdown open">
+                        <i class="fa-light fa-user"></i>
+                        <div class="auth-container" th:object="${userdto}">
+                            <!--                            <span class="text-dndk">Đăng nhập / Đăng ký</span>-->
+                            <span class="text-tk" th:text="*{fullName}">Tài khoản <i class="fa-sharp fa-solid fa-caret-down"></i></span>
+                        </div>
+                        <ul class="header-middle-right-menu">
+                            <li><a th:href="@{/home/trangchu/donhang}"  ><i class="fa-light fa-right-to-bracket"></i> Đơn hàng</a></li>
+                            <li><a th:href="@{/home}"  ><i class="fa-light fa-user-plus"></i> Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    <li class="header-middle-right-item open" >
+                        <div class="cart-icon-menu">
+                            <a th:href="@{/home/trangchu/giohang}"><i class="fa-light fa-basket-shopping"></i></a>
+                            <!--                            <span class="count-product-cart" ></span>-->
+                        </div>
+                        <span>Giỏ hàng</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="main-wrapper">
+    <div class="container px-3 my-5 clearfix">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h2>Giỏ hàng</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered m-0">
+                        <thead>
+                        <tr>
+                            <th class="text-center py-3 px-4" style="width: 150px;">Hình ảnh </th>
+                            <th class="text-center py-3 px-4" style="width: 200px;">Tên sản phẩm </th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">Giá</th>
+                            <th class="text-center py-3 px-4" style="width: 50px;">Số lượng </th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">Thành tiền</th>
+                            <th class="text-right py-3 px-4" style="width: 100px;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${gioHang}">
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                <img  th:src="@{'/assets/img/products/'+${item.sanPham.hinhAnh}}" class="d-block  ui-bordered mr-4" alt="" style="width: 150px">
+                            </td>
+
+                            <td class="text-right font-weight-semibold align-middle p-4"  >
+                                <h8 th:text="${item.sanPham.tenSanPham}" ></h8>
+<!--                                <div class="media align-items-center">-->
+<!--                                    <img  th:src="@{'/assets/img/products/'+${item.sanPham.hinhAnh}}" class="d-block ui-w-40 ui-bordered mr-4" alt="">-->
+<!--                                    <div class="media-body">-->
+<!--                                        <span class="d-block tex t-dark" th:text="${item.sanPham.tenSanPham}"></span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4"  th:text="${item.sanPham.giaSanPham}+'đ'"></td>
+                            <td class="align-middle p-4">
+                                <form th:action="@{/home/suagiohang}"  method="post">
+                                    <input type="hidden" th:value="${item.sanPham.sanPhamId}" name="sanPhamId">
+                                    <input type="number" class="form-control text-center" th:value="${item.soLuong}"  name="soLuong">
+                                    <button class=" btn btn-primary" type="submit">Cập nhật</button>
+                                </form>
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4" th:text="${item.thanhTien}+ 'đ'" ></td>
+                            <td class="text-right font-weight-semibold align-middle p-4 text-center">
+<!--                                <a th:href="@{/home/xoagiohang/{id}(id=${item.sanPham.sanPhamId})}"><i class="fa-solid fa-trash-can">Xóa</i></a>-->
+                                <form th:action="@{/home/xoagiohang}"  method="post">
+                                    <input type="hidden" th:value="${item.sanPham.sanPhamId}" name="sanPhamId">
+                                    <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h5>Tổng tiền : <span th:text="${tongTien}+'đ'"></span></h5>
+                <div class="float-right">
+                    <a th:href="@{/home/trangchu/checkout}">
+<!--                        <button type="button" class="btn btn-lg btn-primary mt-2">Đặt hàng</button>-->
+                        <input id="form-button" class="btn btn-success btn-block" type="submit" value="Đặt hàng">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-top-content">
+                <div class="footer-top-img">
+                    <img src="./fe/img/vy-food.png" alt="">
+                </div>
+                <div class="footer-top-subbox">
+                    <div class="footer-top-subs">
+                        <h2 class="footer-top-subs-title">Đăng ký nhận tin</h2>
+                        <p class="footer-top-subs-text">Nhận thông tin mới nhất từ chúng tôi</p>
+                    </div>
+                    <form class="form-ground">
+                        <input type="email" class="form-ground-input" placeholder="Nhập email của bạn">
+                        <button class="form-ground-btn">
+                            <span>ĐĂNG KÝ</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="widget-area">
+        <div class="container">
+            <div class="widget-row">
+                <div class="widget-row-col-1">
+                    <h3 class="widget-title">Về chúng tôi</h3>
+                    <div class="widget-row-col-content">
+                        <p>HTSTORE là thương hiệu được thành lập vào năm 2024 với tiêu chí đặt chất lượng sản phẩm lên hàng đầu.</p>
+                    </div>
+                    <div class="widget-social">
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                        <div class="widget-social-item">
+                            <a href="">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-row-col">
+                    <h3 class="widget-title">Liên kết</h3>
+                    <ul class="widget-contact">
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Về chúng tôi</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Sản phẩm</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Điều khoản</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Liên hệ</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Tin tức</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-row-col">
+                    <h3 class="widget-title">Sản phẩm</h3>
+                    <ul class="widget-contact">
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Quần</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Áo</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Giày</span>
+                            </a>
+                        </li>
+                        <li class="widget-contact-item">
+                            <a href="">
+                                <i class="fa-regular fa-arrow-right"></i>
+                                <span>Phụ kiện</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-row-col-1">
+                    <h3 class="widget-title">Liên hệ</h3>
+                    <div class="contact">
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fa-regular fa-location-dot"></i>
+                            </div>
+                            <div class="contact-content">
+                                <span>Ngõ 75, đường Vân Canh, An Trai Hoài Đức Hà Nội</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fa-regular fa-phone"></i>
+                            </div>
+                            <div class="contact-content contact-item-phone">
+                                <span>0123 456 789</span>
+                                <br>
+                                <span>0969 485 421</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <div class="contact-content conatct-item-email">
+                                <span>lvh@gmail.com</span><br />
+                                <span>pvt@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
